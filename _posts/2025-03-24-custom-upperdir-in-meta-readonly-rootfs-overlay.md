@@ -25,9 +25,7 @@ but only have one disk/volume for the rootrw due to limited partitioning space,
 and the user wants to switch between A/B RO `rootfs` meanwhile keep the overlayfs matching the RO `rootfs` that is being activated,
 then the user can define their custom `upperdir` name via kernel `cmdline`.
 
-I have made some changes to achieve this: <cite><a href="https://github.com/swechencheng/meta-readonly-rootfs-overlay">My fork of `meta-readonly-rootfs-overlay`</a></cite>
-
-This is to make it possible for user to define their own `upperdir` location in rootrw.
+I have made [a PR] to make it possible for user to define their own `upperdir` location in rootrw.
 This gives the user more control over the `upperdir`(s) and the possibility to manage multiple versions of `upperdir`.
 
 The usage is, e.g. in my particular kernel `cmdline`, if the system boots from rootfs A:
@@ -45,8 +43,6 @@ This device have a small raw NAND where the system runs, thus we use underlying 
 The RO rootfs is running squashfs over UBI block device emulation for saving spaces. And an RW "overlay" sits on top of that.
 
 You can read more how basically it works in [Marcus Folkesson's blog].
-
-I have [a PR] to merge my changes to upstream.
 
 Last but not least, people may ask:
 - How to cleanup the old `upperdir`s?
