@@ -15,4 +15,5 @@ group :jekyll_plugins do
   gem "jemoji"
   gem "jekyll-algolia"
   gem 'jekyll-spaceship'
+  gem 'jekyll-mermaid'
 end

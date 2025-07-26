@@ -57,6 +57,7 @@ plugins:
   - jemoji
   - jekyll-include-cache
   - jekyll-spaceship
+  - jekyll-mermaid
 
 author:
   name   : "Chencheng Zhang"
@@ -118,3 +119,6 @@ jekyll-spaceship:
       height: 450px
       style: 'aspect-ratio: 16/9; max-width: 800px; max-height: 450px; margin: 0 auto;'
       allowfullscreen: true
+
+mermaid:
+  src: 'https://cdn.jsdelivr.net/npm/mermaid@11.9.0/dist/mermaid.min.js'
