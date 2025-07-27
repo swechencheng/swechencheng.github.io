@@ -102,3 +102,13 @@ category_archive:
 tag_archive:
   type: liquid
   path: /tags/
+
+jekyll-spaceship:
+  processors:
+    - table-processor
+    - mathjax-processor
+    - plantuml-processor
+    - polyfill-processor
+    - media-processor
+    - emoji-processor
+    - element-processor
