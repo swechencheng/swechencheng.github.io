@@ -1,0 +1,38 @@
+name: Deploy with Jekyll Spaceship
+
+on:
+  push:
+    branches: [main]  # Change if using a different source branch
+
+# Add write permissions here
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        # Fetch all history for Jekyll
+        fetch-depth: 0
+
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.1
+        bundler-cache: true
+
+    - name: Build with plugins
+      run: bundle exec jekyll build
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        # Use the automatic token
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./_site
+        # Add this to force push and clean old files
+        force_orphan: true
+        # Set target branch (change if using different branch for hosting)
+        publish_branch: gh-pages
