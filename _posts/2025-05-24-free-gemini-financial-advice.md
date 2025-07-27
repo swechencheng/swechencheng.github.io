@@ -17,7 +17,7 @@ tags:
 > This blog is for demonstration purposes only and does not constitute investment advice. Always conduct your own research or consult a qualified financial advisor before making any investment decisions.
 
 Let me begin with this [video](https://youtu.be/ZoLD9a0_1zI).
-![](https://www.youtube.com/watch?v=ZoLD9a0_1zI)
+![](https://www.youtube.com/embed/watch?v=ZoLD9a0_1zI?width=800&height=450)
 
 It is a demo of using Gemini 2.5 Pro Deep Research for **free**, which is really interesting and crazy base on recent Google AI release.
 
