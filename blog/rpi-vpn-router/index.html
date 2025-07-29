@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.3 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Super cheap: A Raspberry Pi VPN router for IoT devices - Chencheng’s Blog</title>
+<meta name="description" content="DISCLAIMER">
+
+
+  <meta name="author" content="Chencheng Zhang">
+  
+  <meta property="article:author" content="Chencheng Zhang">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Chencheng's Blog">
+<meta property="og:title" content="Super cheap: A Raspberry Pi VPN router for IoT devices">
+<meta property="og:url" content="/blog/rpi-vpn-router/">
+
+
+  <meta property="og:description" content="DISCLAIMER">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2025-07-27T17:51:19+02:00">
+
+
+
+
+
+
+<link rel="canonical" href="/blog/rpi-vpn-router/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Chencheng's Blog Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  <script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Chencheng's Blog
+          
+        </a>
+        <ul class="visible-links">
+<li class="masthead__menu-item">
+              <a href="/posts/">Posts</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/categories/">Categories</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li>
+</ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="/">
+        <img src="/assets/images/bio-photo.jpg" alt="Chencheng Zhang" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="/" itemprop="url">Chencheng Zhang</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>An Embedded Linux Developer living in Sweden.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="https://www.linkedin.com/in/chenchengzhang/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-brands fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/swechencheng/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Super cheap: A Raspberry Pi VPN router for IoT devices">
+    <meta itemprop="description" content="DISCLAIMER">
+    <meta itemprop="datePublished" content="2025-07-27T17:51:19+02:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="/blog/rpi-vpn-router/" itemprop="url">Super cheap: A Raspberry Pi VPN router for IoT devices
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          10 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h1 id="disclaimer"><strong>DISCLAIMER</strong></h1>
+
+<ul>
+  <li>
+    <p>Educational &amp; Hobby Use Only</p>
+
+    <p>The content on this blog is provided solely for educational, informational, and hobby purposes. I have no intention of infringing upon or circumventing any manufacturer’s terms of service, license agreements, or intellectual property rights.</p>
+  </li>
+  <li>
+    <p>No Warranty</p>
+
+    <p>All information is provided “as is,” without warranty of any kind, express or implied. I make no representations or warranties regarding the accuracy, completeness, reliability, or suitability of the information for any purpose.</p>
+  </li>
+  <li>
+    <p>Use at Your Own Risk</p>
+
+    <p>Any actions you take based on the information presented here are strictly at your own risk. I shall not be held liable for any damages, losses or other liabilities that may arise from your use of, or reliance on, this blog.</p>
+  </li>
+  <li>
+    <p>Non‑Commercial</p>
+
+    <p>This blog does not offer any commercial services, paid consultancy, or legal advice. All findings are shared freely and without charge, and no part of this material may be sold, redistributed, or repackaged for commercial gain.</p>
+  </li>
+  <li>
+    <p>Respect Manufacturer Terms</p>
+
+    <p>You are solely responsible for ensuring that any experiments or modifications you undertake do not violate the manufacturer’s terms of service, local laws, or regulations in your jurisdiction.</p>
+  </li>
+  <li>
+    <p>No Legal Advice</p>
+
+    <p>Nothing on this blog constitutes legal or professional advice. If you require legal guidance regarding geofencing, device usage, or related topics, please consult a qualified attorney.</p>
+  </li>
+</ul>
+
+<h1 id="background">Background</h1>
+
+<p>When we visited our family in another country, my wife purchased a really advanced robot vacuum cleaner which can also mop the floor as well as cross the door threshold.
+Moreover, it has AI voice control, e.g., I can ask it to just clean a specific area such as near the cat litter box.
+This kind of robot is not available in any European market, due to the fact that tech companies in Europe mostly don’t do rat race like some other top countries do. So we usually buy some smart devices when we do family visit and take the smart devices with us back to Sweden.</p>
+
+<p>Here is the <strong>problem</strong>: This brand new shiny robot cleaner is Geo-fenced! And we cannot use it here at our nice home!</p>
+
+<h1 id="what-is-the-solution">What is the solution?</h1>
+
+<p>Since most robots usually does not use real GPS signal for geofencing (the reason could be cost reduction for manufacturer, and GPS works bad inddor), I think it should be IP based geofencing.
+Then it is easy to solve the problem with a VPN.</p>
+
+<p>But I cannot install a VPN on a robot, since I don’t want to break the official firmware.
+So I have to make a VPN router to let the robot connect to, and the robot’s network traffic should be automatically directed through the VPN.</p>
+
+<p>For me another <strong>key point</strong> is: I don’t want to pay any VPN service provider, since I <strong>DON’T TRUST</strong> any 3rd party VPN service provider from the geofencing country. So I need to choose a good enough one.
+Comnon VPN solutions such as <a href="https://www.wireguard.com/">Wireguard</a> and <a href="https://openvpn.net/">OpenVPN</a> are already censored and blocked in the geofencing country. So I have to choose alternatives.</p>
+
+<p><a href="https://www.zerotier.com/">Zerotier</a> could be the one. And I have been using it a lot for my other devices for many years. It’s a perfect private networking overlay. But I found some guys saying that Zerotier is not stable in the geofencing country.
+They mention that <a href="https://tailscale.com/">Tailscale</a> is a good solution. And one can set it up on any device, Linux, Windows, MacOS, iOS, Android, and even an <em>Apple TV</em>… Okay fair enough. Let’s go ahead with Tailscale then.</p>
+
+<p>To enable Tailscale VPN, one have to setup an <a href="https://tailscale.com/kb/1103/exit-nodes">exit node</a>.
+And one need to run Tailscale client on the other device which want to have VPN access.</p>
+
+<p>Normally, people would install a Tailscale exit node (such as <a href="https://openwrt.org/">OpenWRT</a>) in the geofencing country. But I am not physically feasible to do this. So I decide to choose a VPS cloud provider and use a VPS instance to run Tailscale as a exit node.
+Actually it is super cheap to use Alibaba as a VPS cloud provider. They offer <strong>3 month free trial</strong> with an economic VPS instance in the geofencing country, and then charge people only around <strong>$10-20 USD every year</strong> after free trial is over.</p>
+
+<p>I also need a Tailscale VPN router here at my home. Unfortunately I am not the rule maker at home, so I cannot change our nice router into OpenWRT because we want to stick with factory stock firmware.
+And I also want to keep everything cheap and tidy. Luckily I found out that I have an old long-forgotten Raspberry Pi 3B slumbering for years in a neglected corner of the study.
+That’s it! Since I only need to route a robot which is an embedded device, there is no requirement for a high speed network required by streaming or gaming.</p>
+
+<p>So here would be the setup:</p>
+<ol>
+  <li>A modem provided by ISP to give Internet access.</li>
+  <li>A home router which is for normal usage. Several devices connect to the router.</li>
+  <li>A remote Tailscale exit node which runs on a VPS in the geofencing country to provide the VPN access to the Internet in that country.</li>
+  <li>A RPi 3B VPN router which runs Tailscale and uses the Tailscale exit node in the other country. This RPi also runs <a href="https://w1.fi/hostapd/">hostapd</a> where the robot connects to, and forward all the traffic from host AP to the Tailscale exit node, so that my luxury robot will “think” itself as in the geofencing country.</li>
+</ol>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.9.0/dist/mermaid.min.js"></script>
+<div class="mermaid">
+graph TD
+    Internet[🌐 Internet]
+    ISP[📡 ISP Modem]
+    HomeRouter[🏠 Home Router]
+    RPiRouter[🥧 RPi 3B VPN Router<br>Tailscale + hostapd]
+    TailscaleVPS[☁️ Tailscale Exit Node<br>VPS in Other Country]
+    
+    %% Regular home devices
+    Laptop[💻 Laptop]
+    Phone[📱 Phone]
+    TV[📺 Smart TV]
+    
+    %% VPN connected devices
+    VPNRobot[📱 \(VPN\) Robot cleaner]
+    VPNIoTDevice[📱 \(VPN\) IoT Device]
+    
+    %% Internet connections
+    Internet --- ISP
+    ISP --- HomeRouter
+    HomeRouter --- RPiRouter
+    
+    %% Regular device connections
+    HomeRouter --- Laptop
+    HomeRouter --- Phone
+    HomeRouter --- TV
+    
+    %% VPN device connections to RPi AP
+    RPiRouter --- VPNRobot
+    RPiRouter --- VPNIoTDevice
+    
+    %% Tailscale tunnel
+    RPiRouter -.-&gt;|Tailscale Tunnel| TailscaleVPS
+    TailscaleVPS -.-&gt;|Exit to Internet<br>from Other Country| Internet
+    
+    %% Styling
+    classDef vpnDevices fill:#e1f5fe,stroke:#0277bd,stroke-width:2px
+    classDef infrastructure fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef tunnel stroke:#ff6f00,stroke-width:3px,stroke-dasharray: 5 5
+    
+    class VPNRobot,VPNIoTDevice vpnDevices
+    class RPiRouter,TailscaleVPS infrastructure
+    class RPiRouter tunnel
+</div>
+
+<h1 id="detailed-or-not-so-guide-to-setup-everything">Detailed (or not so?) guide to setup everything</h1>
+
+<h2 id="first-build-my-own-vps-tailscale-exit-node">First, build my own VPS Tailscale exit node</h2>
+
+<p>Run a VPS instance and <a href="https://tailscale.com/kb/1347/installation">install Tailscale</a>.
+Follow <a href="https://tailscale.com/kb/1103/exit-nodes">this guide</a> to setup exit node.
+One might find out that DNS will be “broken” after enabling Tailscale.
+So pay attention to the <a href="https://tailscale.com/kb/1188/linux-dns#common-problems">common problems</a>.</p>
+
+<p>Make sure I don’t see any <code class="language-plaintext highlighter-rouge">Tailscale health check</code> when I run:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>tailscale status
+</code></pre></div></div>
+
+<p>I cannot be very detailed here because everyone has their own preference towards a cloud VPS service. And there are tons of guides out there on the Internet, so I decide to skip this chapter.</p>
+
+<h2 id="second-build-my-rpi-vpn-router">Second, build my RPi VPN router</h2>
+
+<p>Here I start with a <a href="https://www.raspberrypi.com/software/operating-systems/">RaspberryPi OS <strong>Lite</strong></a>.
+Because My RPi 3B is too old, I want the system to be very small and efficient.</p>
+
+<p>Then remove the NetworkManager… (You can ask AI why?)</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt remove network-manager
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/1140756/124652877-7e713e00-de51-11eb-9973-09be5be1f069.jpg" alt=""></p>
+
+<p>NetworkManager is heavy, bloaty, and sometimes has conflict with <a href="https://github.com/tailscale/tailscale/issues/2334">Tailscale DNS race condition</a>.
+Again I want the system to be very efficient.</p>
+
+<p>I use <code class="language-plaintext highlighter-rouge">systemd-networkd</code> and <code class="language-plaintext highlighter-rouge">systemd-resolvd</code> instead. Install them if not:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>systemd-networkd systemd-resolvd
+</code></pre></div></div>
+
+<p>Then install <code class="language-plaintext highlighter-rouge">hostapd</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>hostapd
+</code></pre></div></div>
+
+<p>Now I can specify my <code class="language-plaintext highlighter-rouge">/etc/hostapd/hostapd.conf</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Interface and driver
+interface=wlan0
+driver=nl80211
+
+# Network name and mode
+ssid=MyVpnAP
+hw_mode=g
+channel=6 # Less likely to overlap with other WiFi
+macaddr_acl=0
+auth_algs=1
+ignore_broadcast_ssid=0
+
+# Security
+wpa=2
+wpa_passphrase=MyStrongEnoughPassword
+wpa_key_mgmt=WPA-PSK
+wpa_pairwise=TKIP
+rsn_pairwise=CCMP
+
+# Country code (important for location spoofing)
+country_code=CN # Oops, now everyone know which geofencing country it is...
+ieee80211d=1
+ieee80211h=1
+</code></pre></div></div>
+
+<p>Install the dnsmasq to manage the DHCP and DNS on <code class="language-plaintext highlighter-rouge">wlan0</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>dnsmasq
+</code></pre></div></div>
+
+<p>And I want to avoid <code class="language-plaintext highlighter-rouge">systemd-resolved</code> to manage <code class="language-plaintext highlighter-rouge">wlan0</code>, which will cause conflict.
+So I specify <code class="language-plaintext highlighter-rouge">/etc/systemd/network/10-wlan0.network</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Match]
+Name=wlan0
+
+[Network]
+Address=192.168.4.1/24
+IPForward=yes
+DHCPServer=no
+</code></pre></div></div>
+
+<p>And specify <code class="language-plaintext highlighter-rouge">/etc/dnsmasq.conf</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Don't let dnsmasq poll /etc/resolv.conf or other resolv
+no-poll
+
+# Upstream DNS Servers
+server=100.100.100.100 # Tailscale
+server=223.5.5.5       # Alibaba
+server=1.1.1.1         # Cloudflare
+
+# Only for wlan0 (which used by hostapd)
+interface=wlan0
+bind-interfaces
+listen-address=192.168.4.1
+
+# Override the default route supplied by dnsmasq, which assumes the
+# router is the same machine as the one running dnsmasq.
+dhcp-option=3,192.168.4.1
+# Enable the integrated DHCP server
+dhcp-range=192.168.4.2,192.168.4.50,255.255.255.0,24h
+
+# Slightly bigger cache size than default 150
+cache-size=1000
+</code></pre></div></div>
+
+<p>Now my host AP will have a gateway IP address <code class="language-plaintext highlighter-rouge">192.168.4.1</code>,
+and my clients which connect to the AP will have IP address from <code class="language-plaintext highlighter-rouge">192.168.4.2</code> to <code class="language-plaintext highlighter-rouge">192.168.4.50</code>.
+I force the DNS to be a Tailscale DNS or fall back to Alibaba’s DNS so the host AP can be a really nice target geo.</p>
+
+<p><code class="language-plaintext highlighter-rouge">dnsmasq</code> is convenient for me to do very specific setup on host AP.
+Thus host AP can be <strong>“geo-fencing”</strong> as the target country.</p>
+
+<p>And I let <code class="language-plaintext highlighter-rouge">systemd-resolved</code> to manage the rest of the network interfaces.</p>
+
+<p>Remember to add this <code class="language-plaintext highlighter-rouge">/etc/systemd/network/10-eth0.network</code> for Ethernet cable:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Match]
+Name=eth0
+
+[Network]
+DHCP=yes
+</code></pre></div></div>
+
+<p>It’s better to reboot my RPi once to apply those settings before proceed with Tailscale.</p>
+
+<p>After reboot, <a href="https://tailscale.com/kb/1347/installation">install Tailscale</a>.
+Bring Tailscale online and solve <a href="https://tailscale.com/kb/1188/linux-dns#common-problems">common problems</a>.
+My Tailscale should <a href="https://tailscale.com/kb/1103/exit-nodes?tab=linux#use-the-exit-node">use the exit node</a> which I have set up in the previous chapter.</p>
+
+<p>Make sure I don’t see any <code class="language-plaintext highlighter-rouge">Tailscale health check</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>tailscale status
+100.69.181.99   rpi-3b-tailscale     charles.cc.zhang@ linux   -
+100.117.23.101  izbp15dsdfqo80wert7lm2z-1 charles.cc.zhang@ linux   active<span class="p">;</span> <span class="nb">exit </span>node<span class="p">;</span> direct 114.215.188.166:41641, tx 60592228 rx 322398812
+</code></pre></div></div>
+
+<p>Here I have <code class="language-plaintext highlighter-rouge">rpi-3b-tailscale</code> which stands for my RPi 3B, and <code class="language-plaintext highlighter-rouge">izbp15dsdfqo80wert7lm2z-1</code> for my VPS in the geofencing country.</p>
+
+<p>Now it is time to setup the traffic forwarding from host AP to Tailscale.</p>
+
+<p>Install iptables:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>iptables iptables-persistent
+</code></pre></div></div>
+
+<p>Setup kernel parameters in <code class="language-plaintext highlighter-rouge">/etc/sysctl.conf</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>net.ipv4.ip_forward=1
+net.ipv4.conf.tailscale0.forwarding=1
+net.ipv4.conf.wlan0.forwarding=1
+</code></pre></div></div>
+
+<p>And apply:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>sysctl <span class="nt">-p</span>
+</code></pre></div></div>
+
+<p>Add firewall rules:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo iptables -A FORWARD -s 192.168.4.0/24 -o tailscale0 -j ACCEPT
+sudo iptables -A FORWARD -i tailscale0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+
+sudo iptables -t nat -A POSTROUTING -s 192.168.4.0/24 -o tailscale0 -j MASQUERADE
+
+# This is very important to do TCP MSS clamping because Tailscale has a different mtu than wlan0
+sudo iptables -t mangle -A FORWARD -o tailscale0 -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --set-mss 1240
+</code></pre></div></div>
+
+<p>Now I have finished all the configurations!</p>
+
+<p>Oh well, save my iptables to make it persistent:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>netfilter-persistent save
+</code></pre></div></div>
+
+<p>Now, even if there is a power outrage, my RPi VPN tunnel will automatically come back after a reboot.</p>
+
+<h2 id="test-the-outcome">Test the outcome</h2>
+
+<p>I can use my mobile to connect to my host AP <code class="language-plaintext highlighter-rouge">MyVpnAP</code>, then just visit <code class="language-plaintext highlighter-rouge">ifconfig.me</code>.
+And I get the correct IP which is in the geofencing target country.</p>
+
+<p>I even opened a specific geofencing live streaming APP from that country and stream a little bit. For the first half minute it was fine, but then it became choppy and the AP WiFi broke. 
+Oh my poor RPi 3B…</p>
+
+<p>But the AP immediately came back afterwards once I stop the streaming APP.
+This RPi VPN router is not for heavy duty for sure.</p>
+
+<p>Our luxury robot cleaner is now happily working, the only thing we have not let it try is to let it open its camera and automatically chase my nice little cat. I think this functionality is too heavy for my RPi VPN router.</p>
+
+<p>So far I have <strong>not</strong> spent <strong>a single penny</strong> because I am reusing my old devices, and the VPS exit node is still on free trial.
+After the trial period over, I am more than willing to pay Alibaba $10-20 a year for keep the VPS up and running as an Tailscale exit node.</p>
+
+<h1 id="caveat">Caveat</h1>
+
+<p>For most robot’s manufacturer’s controlling APP, it is <strong>strongly recommended</strong> to also connect to the RPi VPN router’s AP while you do the configuration towards your robot.
+This is to make sure your real IP won’t leak from your mobile APP to the manufacturer.</p>
+
+<h1 id="a-better-approach">A better approach</h1>
+
+<p>RPi router is not optimal for wireless.
+<a href="https://openwrt.org/docs/guide-user/services/vpn/tailscale/start">OpenWRT with Tailscale</a> is much better in every aspect, e.g. coverage and performance.
+If OpenWRT is available, don’t hesitate to replace the RPi with it!</p>
+
+<p>Hope this blog finds someone who needs it. Cheers!</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#embedded-linux" class="page__taxonomy-item p-category" rel="tag">Embedded Linux</a><span class="sep">, </span>
+    
+      <a href="/tags/#geofence" class="page__taxonomy-item p-category" rel="tag">Geofence</a><span class="sep">, </span>
+    
+      <a href="/tags/#iot-device" class="page__taxonomy-item p-category" rel="tag">IoT device</a><span class="sep">, </span>
+    
+      <a href="/tags/#networking" class="page__taxonomy-item p-category" rel="tag">Networking</a><span class="sep">, </span>
+    
+      <a href="/tags/#raspberry-pi" class="page__taxonomy-item p-category" rel="tag">Raspberry Pi</a><span class="sep">, </span>
+    
+      <a href="/tags/#robot-vacuum-cleaner" class="page__taxonomy-item p-category" rel="tag">robot vacuum cleaner</a><span class="sep">, </span>
+    
+      <a href="/tags/#tailscale" class="page__taxonomy-item p-category" rel="tag">Tailscale</a><span class="sep">, </span>
+    
+      <a href="/tags/#vpn" class="page__taxonomy-item p-category" rel="tag">VPN</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#blog" class="page__taxonomy-item p-category" rel="tag">blog</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2025-07-27T17:51:19+02:00">July 27, 2025</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  <h4 class="page__share-title">Share on</h4>
+
+  <a href="https://x.com/intent/tweet?text=Super+cheap%3A+A+Raspberry+Pi+VPN+router+for+IoT+devices%20%2Fblog%2Frpi-vpn-router%2F" class="btn btn--x" aria-label="Share on X" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on X">
+    <i class="fab fa-fw fa-x-twitter" aria-hidden="true"></i><span> X</span>
+  </a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=%2Fblog%2Frpi-vpn-router%2F" class="btn btn--facebook" aria-label="Share on Facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook">
+    <i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span>
+  </a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=/blog/rpi-vpn-router/" class="btn btn--linkedin" aria-label="Share on LinkedIn" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn">
+    <i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span>
+  </a>
+
+  <a href="https://bsky.app/intent/compose?text=Super+cheap%3A+A+Raspberry+Pi+VPN+router+for+IoT+devices%20%2Fblog%2Frpi-vpn-router%2F" class="btn btn--bluesky" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Bluesky">
+    <i class="fab fa-fw fa-bluesky" aria-hidden="true"></i><span> Bluesky</span>
+  </a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/free-gemini-financial-advice/" class="pagination--pager" title="Free Gemini 2.5 Pro Investment Opportunity Analysis">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">You May Also Enjoy</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/free-gemini-financial-advice/" rel="permalink">Free Gemini 2.5 Pro Investment Opportunity Analysis
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          103 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">DISCLAIMER
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/yocto-custom-ubinize/" rel="permalink">Yocto custom UBI image guide in detail
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">In this blog, I will discuss something new I found based on my previous blog,
+as well as another Marcus Folkesson’s blog.
+
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/custom-upperdir-in-meta-readonly-rootfs-overlay/" rel="permalink">Custom <code class="language-plaintext highlighter-rouge">upperdir</code> in meta-readonly-rootfs-overlay
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">I have been working and designing a new Embedded Linux with a brand new upgrade mechanism on an 7-10 year-old legacy Embedded Linux devices which had no atom...</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/remote-control-a-power-supply/" rel="permalink">Remote control a power supply
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">When working with embedded devices, I need to control, e.g. voltage and current on some test point. I got a good power supply Aim-TTi MX100TP, which I can ha...</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap">
+<form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term...">
+  </form>
+  <div id="results" class="results"></div>
+</div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://github.com/swchencheng/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">© 2025 <a href="">Chencheng's Blog</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
